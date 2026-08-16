@@ -6,7 +6,7 @@
 
 **Architecture:** A Vite + React + TypeScript single-page app. A single typed API layer (`services/pokemonApi.ts`) owns all network access, normalization, error classification, and in-memory caching. Custom hooks (`usePokemonList`, `usePokemonDetail`, …) own data orchestration — pagination, search, filtering, sorting — so components stay presentational and reusable. Three React contexts (Theme, Favorites, Compare) own cross-cutting client state and persist to `localStorage`. All view state that a user would want to share (selected Pokémon, search query, active type, sort) lives in the URL.
 
-**Tech Stack:** React 19 · TypeScript (strict) · Vite · React Router · Tailwind CSS v4 · Framer Motion · Lucide React · Vitest + React Testing Library
+**Tech Stack:** React 19 · TypeScript (strict) · Vite · React Router · Tailwind CSS v4 · Framer Motion · Lucide React · Space Grotesk / Inter / JetBrains Mono · Vitest + React Testing Library
 
 **Spec:** `Frontend Assignment_ Public API Integration & UI.pdf` (repo root) — extracted verbatim to `out_assignment.txt`. The "Design System" and "Requirement Traceability" sections of *this* document form the derived spec; both travel with the plan.
 
@@ -65,7 +65,31 @@ Every task's requirements implicitly include this section.
 
 ## Design System
 
-The single source of visual truth. Direction: **premium base + playful type-coloured accents** — restrained, spacious, crisp typography (Linear/Vercel-grade), energised by vivid per-type colour on cards, badges, and the detail view.
+The single source of visual truth. Direction: **a catalog instrument, not a dashboard.**
+
+A Pokédex is a handheld device for indexing specimens, so the design borrows that world's vernacular: numbered catalog entries set in mono, a live count readout, hairline construction lines, and the Poké Ball's own geometry as a structural device. The chrome stays near-monochrome and disciplined; the 18 type colours are the only loud thing on screen, and a single Poké Ball red carries every interactive state.
+
+**Deliberate anti-defaults.** The accent is Poké Ball red rather than the indigo/violet that every AI-generated app reaches for. The light background is a cool `#f4f5f8` rather than the warm cream `#f4f1ea` default. The display face is Space Grotesk — technical, slightly retro-futurist — rather than Poppins/Outfit. Boldness is spent in exactly one place: the seam device below.
+
+### Signature device — the Poké Ball seam
+
+A Poké Ball is defined by one horizontal seam with a circular latch at its centre. Every card and the modal header reproduce that construction:
+
+```
+┌─────────────────────┐
+│  #025      ♥        │   ← catalog number (mono) + favourite
+│                     │
+│      ( artwork )    │   ← type-tinted wash behind the artwork
+│                     │
+├──────────●──────────┤   ← 1px seam + type-coloured latch dot
+│  Pikachu            │   ← name (Space Grotesk, bold)
+│  [Electric]         │   ← type badge(s)
+└─────────────────────┘
+```
+
+- The seam is a true 1px `--color-border` hairline; the latch is a 10px type-coloured disc centred on it with a 2px surface-coloured ring, so it reads as hardware.
+- On hover the latch blooms to a 14px disc with a type-coloured glow, the artwork scales 1.06, and the card lifts 4px. That single moment is the app's memorable interaction — nothing else animates on hover.
+- The modal repeats the seam at 2× scale, so opening a card feels like the same object enlarging.
 
 ### Colour tokens
 
@@ -73,33 +97,44 @@ Defined as CSS custom properties in `src/styles/index.css`, exposed to Tailwind 
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--color-bg` | `#f7f7fb` | `#0a0a0f` | page background |
-| `--color-surface` | `#ffffff` | `#14141c` | cards, modal, header |
-| `--color-surface-2` | `#f1f1f6` | `#1c1c28` | inputs, chips, skeletons |
-| `--color-border` | `#e6e6ef` | `#28283a` | hairlines |
-| `--color-text` | `#0f0f16` | `#f5f5fa` | primary text |
-| `--color-text-muted` | `#61617a` | `#9a9ab4` | secondary text |
-| `--color-brand` | `#6d5efc` | `#8b7dff` | accent, focus ring, active chip |
-| `--color-danger` | `#e0344b` | `#ff5c70` | error states |
-| `--color-favorite` | `#f43f7e` | `#ff5c95` | favourite heart |
+| `--color-bg` | `#f4f5f8` | `#0b0b12` | page background (cool paper / deep ink) |
+| `--color-surface` | `#ffffff` | `#15151e` | cards, modal, header |
+| `--color-surface-2` | `#eceef4` | `#1e1e2a` | inputs, chips, skeletons |
+| `--color-border` | `#e0e3ec` | `#2a2a3a` | hairlines, the seam |
+| `--color-text` | `#12121a` | `#f4f5fa` | primary text |
+| `--color-text-muted` | `#5c6172` | `#9aa0b8` | secondary text, readouts |
+| `--color-brand` | `#e3252b` | `#ff4d55` | Poké Ball red — buttons, focus ring, active chip, links |
+| `--color-favorite` | `#e3252b` | `#ff4d55` | favourite heart (semantic alias of brand) |
+| `--color-danger` | `#b3202b` | `#ff7a80` | error iconography only |
+
+Only one accent hue exists. Error states lean on icon + copy rather than a competing colour, and `Try Again` is a **primary** action (brand red) because it is not destructive.
 
 ### Typography
-- Display / headings: **Outfit** variable (`@fontsource-variable/outfit`) — geometric, friendly.
-- UI / body: **Inter** variable (`@fontsource-variable/inter`).
-- Self-hosted via `@fontsource-variable/*` (no external font requests → works offline, no CLS).
+
+Three roles, all self-hosted via `@fontsource-variable/*` (no external requests, no CLS, works offline).
+
+| Role | Face | Used for |
+|---|---|---|
+| Display | **Space Grotesk** 500/700 | wordmark, Pokémon names, section headings |
+| Body | **Inter** 400/500/600 | labels, descriptions, buttons, all prose |
+| Data | **JetBrains Mono** 500 | catalog numbers (`#025`), stat values, height/weight/XP readouts, counts |
+
 - Scale: `text-xs 12` · `sm 14` · `base 16` · `lg 18` · `xl 20` · `2xl 24` · `3xl 30` · `4xl 36` · `5xl 48`.
-- Pokémon ID uses `font-mono tabular-nums`.
+- Display is set tight (`tracking-tight`, `leading-[1.05]`); mono is always `tabular-nums` so columns of numbers align.
+- Anything that is a *measurement or an index* is mono. That rule is what makes the app read as an instrument.
 
 ### Shape, depth, motion
 - Radii: cards `rounded-3xl` (24px), chips/buttons `rounded-full`, inputs `rounded-2xl`.
 - Shadows: layered and soft — `shadow-[0_1px_2px_rgba(16,16,32,.04),0_8px_24px_-8px_rgba(16,16,32,.10)]`; hover lifts to a wider, type-tinted glow.
 - Spacing rhythm: multiples of 4; section gutters `px-4 sm:px-6 lg:px-8`; grid gap `gap-4 sm:gap-5`.
-- Motion budget (subtle, per the brief's "do not overuse"):
-  - Card hover: `translateY(-4px)` + shadow + artwork `scale(1.06)`, `180ms ease-out`.
-  - Card entrance: staggered fade+rise, `28ms` stagger, capped at the first page.
-  - Modal: backdrop fade `160ms`; panel `scale .96→1` + fade `220ms` spring on desktop, slide-up sheet on mobile.
-  - Skeleton: 1.6s shimmer sweep.
+- **No marketing hero.** This is a tool, so the thesis is a compact masthead (wordmark + live `Showing X of Y species` readout) that collapses into the sticky bar on scroll — an instrument panel whose numbers are real information.
+- Motion budget — one orchestrated page-load sequence, then quiet micro-interactions (the brief says "do not overuse"):
+  - Page load: masthead fade+rise (240ms) → readout (+80ms) → card stagger (28ms each, first page only).
+  - Card hover: lift 4px + artwork `scale(1.06)` + latch bloom, `180ms ease-out`.
+  - Modal: backdrop fade 160ms; panel `scale .96→1` + fade 220ms spring on desktop, slide-up sheet on mobile.
+  - Skeleton: 1.6s shimmer sweep. Stat bars: grow from 0 over 600ms ease-out.
   - Buttons/chips: `120ms` background+transform.
+
 
 ### Type colours (all 18)
 
@@ -234,7 +269,8 @@ npm install
 
 ```bash
 npm install react-router-dom framer-motion lucide-react \
-  @fontsource-variable/inter @fontsource-variable/outfit
+  @fontsource-variable/inter @fontsource-variable/space-grotesk \
+  @fontsource-variable/jetbrains-mono
 npm install -D tailwindcss @tailwindcss/vite prettier \
   vitest @vitest/coverage-v8 jsdom @testing-library/react \
   @testing-library/user-event @testing-library/jest-dom
@@ -268,38 +304,40 @@ Add to `tsconfig.json` `compilerOptions`: `"baseUrl": "."`, `"paths": { "@/*": [
 ```css
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
-@import '@fontsource-variable/outfit';
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Outfit Variable', 'Inter Variable', sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 
-  --color-bg: #f7f7fb;
+  --color-bg: #f4f5f8;
   --color-surface: #ffffff;
-  --color-surface-2: #f1f1f6;
-  --color-border: #e6e6ef;
-  --color-text: #0f0f16;
-  --color-text-muted: #61617a;
-  --color-brand: #6d5efc;
-  --color-danger: #e0344b;
-  --color-favorite: #f43f7e;
+  --color-surface-2: #eceef4;
+  --color-border: #e0e3ec;
+  --color-text: #12121a;
+  --color-text-muted: #5c6172;
+  --color-brand: #e3252b;
+  --color-favorite: #e3252b;
+  --color-danger: #b3202b;
 
   --animate-shimmer: shimmer 1.6s infinite linear;
   --animate-rise: rise 0.4s ease-out both;
 }
 
 .dark {
-  --color-bg: #0a0a0f;
-  --color-surface: #14141c;
-  --color-surface-2: #1c1c28;
-  --color-border: #28283a;
-  --color-text: #f5f5fa;
-  --color-text-muted: #9a9ab4;
-  --color-brand: #8b7dff;
-  --color-danger: #ff5c70;
-  --color-favorite: #ff5c95;
+  --color-bg: #0b0b12;
+  --color-surface: #15151e;
+  --color-surface-2: #1e1e2a;
+  --color-border: #2a2a3a;
+  --color-text: #f4f5fa;
+  --color-text-muted: #9aa0b8;
+  --color-brand: #ff4d55;
+  --color-favorite: #ff4d55;
+  --color-danger: #ff7a80;
 }
 
 @keyframes shimmer { 0% { background-position: -200% 0 } 100% { background-position: 200% 0 } }
@@ -313,6 +351,8 @@ Add to `tsconfig.json` `compilerOptions`: `"baseUrl": "."`, `"paths": { "@/*": [
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
+  /* Every measurement and index reads as instrument data. */
+  .tabular { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
   :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1112,14 +1152,19 @@ Expected: FAIL — `./PokemonCard` not found.
 
 Pill with `background: color.base`, `color: color.onBase`, `text-xs font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full`. Label via `formatPokemonName(type)`. `size="sm"` variant for cards, `"md"` for the modal.
 
-- [ ] **Step 4: Implement `PokemonCard`**
+- [ ] **Step 4: Implement `PokemonCard` (the signature seam device)**
 
-- Root is a real `<button type="button">` (free keyboard + `role=button` + Enter/Space) with `aria-label={`${formatPokemonName(name)}, number ${id}`}`, `text-left w-full`.
-- Layers: `relative overflow-hidden rounded-3xl border border-border bg-surface p-4` → an absolutely-positioned type wash (`getTypeGradient` at `opacity-[.10]`, `group-hover:opacity-[.18]`) → a large faint Poké-ball watermark bottom-right → content.
-- Artwork: `<img loading="lazy" decoding="async" width={200} height={200}>` on a `drop-shadow-xl`, `transition-transform duration-200 group-hover:scale-[1.06]`; `onError` swaps to `spriteUrl` then to a local placeholder.
-- Layout: ID top-left (`font-mono text-xs text-text-muted`), `FavoriteButton` top-right, artwork centred, name `font-display text-lg font-bold`, type badges row.
+- Root is a real `<button type="button">` (free keyboard + `role=button` + Enter/Space) with `aria-label={`${formatPokemonName(name)}, number ${id}`}`, `text-left w-full group`.
+- Structure follows the Design System's seam diagram exactly — an **upper artwork chamber** and a **lower data chamber**, divided by a 1px seam carrying a type-coloured latch:
+  1. Root: `relative overflow-hidden rounded-3xl border border-border bg-surface`.
+  2. Upper chamber (`relative px-4 pt-4 pb-6`): type wash via `getTypeGradient` at `opacity-[.10]` (`dark:opacity-[.14]`), rising to `.18` on hover; a large faint Poké-ball watermark bottom-right (`aria-hidden`).
+  3. Seam: `h-px w-full bg-border` with the latch absolutely centred on it — a `10px` disc (`background: color.base`) inside a `2px` `bg-surface` ring, growing to `14px` with a `0 0 12px` type-coloured glow on `group-hover`.
+  4. Lower chamber (`px-4 pt-5 pb-4 bg-surface`): name, then type badges.
+- Artwork: `<img loading="lazy" decoding="async" width={200} height={200}>` with `drop-shadow-xl`, `transition-transform duration-200 group-hover:scale-[1.06]`; `onError` swaps to `spriteUrl` then to a local placeholder.
+- Catalog number top-left in the mono `.tabular` class (`text-xs text-text-muted`) — it is an index, so it is mono. `FavoriteButton` top-right.
+- Name: `font-display text-lg font-bold tracking-tight`.
 - Hover: `group-hover:-translate-y-1` + type-tinted shadow, `transition duration-200`. Entrance: Framer `motion.div` fade+rise with `delay: Math.min(index, 19) * 0.028`.
-- Favourite button stops propagation so it never opens the modal.
+- Favourite and compare buttons `stopPropagation` so they never open the modal.
 
 - [ ] **Step 5: Implement `LoadingSkeleton` and `PokemonGrid`**
 
