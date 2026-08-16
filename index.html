@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Explore all 1302 Pokémon — search, filter by type, compare stats, and save favourites. Built on the PokéAPI."
+    />
+    <meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0b12" media="(prefers-color-scheme: dark)" />
+    <title>Pokémon Explorer</title>
+    <script>
+      // Resolve the theme before first paint so dark-mode users never see a
+      // white flash. Mirrors the logic in src/context/ThemeContext.tsx.
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('pokemon-explorer:theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark')
+          }
+        } catch (_) {
+          /* localStorage unavailable (private mode) — fall back to light. */
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Poké Ball: the seam-and-latch construction the whole UI is built on. -->
+  <circle cx="16" cy="16" r="15" fill="#ffffff" />
+  <path d="M1 16a15 15 0 0 1 30 0Z" fill="#e3252b" />
+  <path d="M1 16h30" stroke="#12121a" stroke-width="2.5" />
+  <circle cx="16" cy="16" r="5.5" fill="#ffffff" stroke="#12121a" stroke-width="2.5" />
+  <circle cx="16" cy="16" r="2" fill="#12121a" />
+  <circle cx="16" cy="16" r="15" fill="none" stroke="#12121a" stroke-width="2" />
+</svg>
