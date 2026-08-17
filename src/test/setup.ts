@@ -7,8 +7,8 @@ afterEach(() => {
   localStorage.clear()
 })
 
-// jsdom does not implement matchMedia, which ThemeContext and useMediaQuery
-// both rely on. Default to "no match" (light theme, mobile-first layout).
+// jsdom does not implement matchMedia, which ThemeContext relies on to resolve
+// the initial theme. Default to "no match", i.e. the light theme.
 if (!window.matchMedia) {
   window.matchMedia = vi.fn().mockImplementation((query: string) => ({
     matches: false,
