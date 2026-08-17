@@ -27,7 +27,7 @@ Every task's requirements implicitly include this section.
 - Endpoints used: `/pokemon?limit=&offset=`, `/pokemon/{nameOrId}`, `/type/{type}`, `/type`.
 - Official artwork is derived from ID (no extra request):
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{id}.png`
-- Roster is capped at the **1302 canonical National-Dex entries**; alternate-form IDs (≥ 10000) are excluded because they lack official artwork.
+- Roster is capped at the **canonical National-Dex species** (IDs 1–1025 at time of writing); the list endpoint's `count` of 1302 includes alternate-form IDs (≥ 10000), which are excluded because they lack official artwork. The cut-off is derived from the ID, never hard-coded to a species total.
 - Page size is **20** (matches the brief's `limit=20`).
 
 **Verbatim UI copy** (these exact strings, from the brief — do not paraphrase)
