@@ -5,7 +5,7 @@ Search, filter, sort, favourite, and compare — with every view worth sharing a
 
 **Live demo:** _add your deployment URL here_ · **Repository:** https://github.com/LakraAnshul/PipelineAI-Pokemon
 
-![Pokémon Explorer — the grid in light and dark](screenshots/home-desktop-light.png)
+![The Pokémon Explorer grid on a desktop, in light mode](screenshots/home-desktop-light.png)
 
 <table>
   <tr>
@@ -17,6 +17,13 @@ Search, filter, sort, favourite, and compare — with every view worth sharing a
     <td><img src="screenshots/home-mobile.png" alt="The grid on a phone" /></td>
   </tr>
 </table>
+
+**More screens:** [type filter](screenshots/type-filter.png) ·
+[no results](screenshots/search-empty-state.png) ·
+[API unreachable](screenshots/error-state.png) ·
+[loading skeletons](screenshots/loading-skeletons.png) ·
+[tablet](screenshots/home-tablet.png) ·
+[detail sheet on mobile](screenshots/detail-mobile-sheet.png)
 
 ---
 
