@@ -63,8 +63,9 @@ export const PokemonCard = memo(function PokemonCard({
         <PokemonArtwork
           pokemon={pokemon}
           size={132}
+          fluid
           priority={priority}
-          className="relative drop-shadow-[0_10px_18px_rgb(16_16_32/0.22)] transition-transform duration-300 ease-out group-hover:scale-[1.07]"
+          className="relative h-auto w-[68%] max-h-full drop-shadow-[0_10px_18px_rgb(16_16_32/0.22)] transition-transform duration-300 ease-out group-hover:scale-[1.07]"
         />
       </div>
 

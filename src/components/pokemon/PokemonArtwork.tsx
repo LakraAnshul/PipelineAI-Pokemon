@@ -23,12 +23,23 @@ export function PokemonArtwork({
   pokemon,
   size,
   className,
+  fluid = false,
   priority = false,
 }: {
   pokemon: Pokemon
-  /** Rendered box in px — used for intrinsic size so the grid never reflows. */
+  /**
+   * Intrinsic size in px, always set on the element so the browser knows the
+   * shape before the bytes land. It is also the rendered size unless `fluid`.
+   */
   size: number
   className?: string
+  /**
+   * Let the container decide how large to draw it — `className` supplies the
+   * width, usually a percentage, and the square source supplies the height.
+   * A card that grows with the viewport should grow its specimen too; a fixed
+   * box would strand the artwork in the middle of a wide card.
+   */
+  fluid?: boolean
   /** Skip lazy-loading for above-the-fold artwork. */
   priority?: boolean
 }) {
@@ -54,12 +65,20 @@ export function PokemonArtwork({
   if (!src) {
     return (
       <span
-        className={cn('grid place-items-center text-text-muted/25', className)}
-        style={{ width: size, height: size }}
+        className={cn(
+          'grid aspect-square place-items-center text-text-muted/25',
+          className,
+        )}
+        style={fluid ? undefined : { width: size, height: size }}
         role="img"
         aria-label={`No artwork available for ${formatPokemonName(pokemon.name)}`}
       >
-        <svg viewBox="0 0 48 48" width={size * 0.5} height={size * 0.5} aria-hidden="true">
+        <svg
+          viewBox="0 0 48 48"
+          width={fluid ? '50%' : size * 0.5}
+          height={fluid ? '50%' : size * 0.5}
+          aria-hidden="true"
+        >
           <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" strokeWidth="3" />
           <path d="M4 24h40" stroke="currentColor" strokeWidth="3" />
           <circle cx="24" cy="24" r="6.5" fill="none" stroke="currentColor" strokeWidth="3" />
@@ -89,8 +108,7 @@ export function PokemonArtwork({
       }
       className={cn('select-none object-contain', className)}
       style={{
-        width: size,
-        height: size,
+        ...(fluid ? null : { width: size, height: size }),
         // Behind the image, not under it: dropped the moment real pixels exist,
         // so the transparent parts of the artwork stay transparent.
         ...(state.loaded

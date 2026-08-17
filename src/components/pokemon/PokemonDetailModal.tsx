@@ -207,8 +207,9 @@ function Detail({ pokemon }: { pokemon: Pokemon }) {
           <PokemonArtwork
             pokemon={pokemon}
             size={186}
+            fluid
             priority
-            className="mx-auto drop-shadow-2xl motion-safe:animate-float"
+            className="mx-auto h-auto w-[54%] max-w-[248px] min-w-[150px] drop-shadow-2xl motion-safe:animate-float"
           />
 
           <p className="tabular mt-2 text-xs tracking-[0.12em] text-text-muted">
