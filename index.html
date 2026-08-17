@@ -7,14 +7,15 @@
     <meta name="color-scheme" content="light dark" />
     <meta
       name="description"
-      content="Explore all 1302 Pokémon — search, filter by type, compare stats, and save favourites. Built on the PokéAPI."
+      content="Browse every Pokémon — search the full dex, filter by type, compare stats side by side, and keep a list of favourites. Built on the PokéAPI."
     />
     <meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0b12" media="(prefers-color-scheme: dark)" />
     <title>Pokémon Explorer</title>
     <script>
       // Resolve the theme before first paint so dark-mode users never see a
-      // white flash. Mirrors the logic in src/context/ThemeContext.tsx.
+      // white flash. Mirrors the logic in src/contexts/ThemeContext.tsx, and
+      // reads the same raw string that context writes.
       ;(function () {
         try {
           var stored = localStorage.getItem('pokemon-explorer:theme')
