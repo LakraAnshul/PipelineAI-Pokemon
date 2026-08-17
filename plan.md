@@ -1,6 +1,6 @@
 # Pokémon Explorer — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Build a production-quality, beautifully designed, fully responsive Pokémon Explorer SPA that consumes the public PokéAPI and satisfies every core requirement, UI/UX requirement, code-quality requirement, and *all six* bonus features from the assignment brief.
 
@@ -257,7 +257,7 @@ Proof that nothing in the brief is unimplemented. Every row must be checkable at
 - Consumes: nothing (first task).
 - Produces: working `npm run dev` / `build` / `lint` / `test`; Tailwind v4 with `.dark` variant and all design tokens; `@/` alias.
 
-- [ ] **Step 1: Scaffold Vite React-TS in place**
+- [x] **Step 1: Scaffold Vite React-TS in place**
 
 ```bash
 cd "C:/Users/anshu/OneDrive/Documents/GitHub/PipelineAI"
@@ -265,7 +265,7 @@ npm create vite@latest . -- --template react-ts
 npm install
 ```
 
-- [ ] **Step 2: Install runtime + dev dependencies**
+- [x] **Step 2: Install runtime + dev dependencies**
 
 ```bash
 npm install react-router-dom framer-motion lucide-react \
@@ -276,7 +276,7 @@ npm install -D tailwindcss @tailwindcss/vite prettier \
   @testing-library/user-event @testing-library/jest-dom
 ```
 
-- [ ] **Step 3: Configure Vite (Tailwind plugin, `@/` alias, Vitest)**
+- [x] **Step 3: Configure Vite (Tailwind plugin, `@/` alias, Vitest)**
 
 ```ts
 // vite.config.ts
@@ -299,7 +299,7 @@ export default defineConfig({
 
 Add to `tsconfig.json` `compilerOptions`: `"baseUrl": "."`, `"paths": { "@/*": ["src/*"] }`, `"strict": true`, `"noUnusedLocals": true`, `"noUnusedParameters": true`, `"types": ["vitest/globals", "@testing-library/jest-dom"]`.
 
-- [ ] **Step 4: Write `src/styles/index.css` with tokens, dark variant, keyframes**
+- [x] **Step 4: Write `src/styles/index.css` with tokens, dark variant, keyframes**
 
 ```css
 @import 'tailwindcss';
@@ -363,7 +363,7 @@ Add to `tsconfig.json` `compilerOptions`: `"baseUrl": "."`, `"paths": { "@/*": [
 }
 ```
 
-- [ ] **Step 5: Minimal `App.tsx` smoke render + `src/test/setup.ts`**
+- [x] **Step 5: Minimal `App.tsx` smoke render + `src/test/setup.ts`**
 
 ```ts
 // src/test/setup.ts
@@ -372,12 +372,12 @@ import '@testing-library/jest-dom/vitest'
 
 `App.tsx` renders an `<h1 className="font-display">Pokémon Explorer</h1>` placeholder so the toolchain is provably wired.
 
-- [ ] **Step 6: Verify the whole toolchain**
+- [x] **Step 6: Verify the whole toolchain**
 
 Run: `npx tsc --noEmit && npm run lint && npm run build && npm run dev`
 Expected: typecheck clean, lint clean, build emits `dist/`, dev server serves the heading with Inter/Outfit applied and the correct background colour.
 
-- [ ] **Step 7: Update `package.json` scripts**
+- [x] **Step 7: Update `package.json` scripts**
 
 ```json
 "scripts": {
@@ -391,7 +391,7 @@ Expected: typecheck clean, lint clean, build emits `dist/`, dev server serves th
 }
 ```
 
-- [ ] **Step 8: Commit and push (first commit on `main`)**
+- [x] **Step 8: Commit and push (first commit on `main`)**
 
 ```bash
 git add -A && git rm --cached out.txt out_assignment.txt 2>/dev/null || true
@@ -409,7 +409,7 @@ git push -u origin main
 **Interfaces:**
 - Produces: `PokemonType` (union of 18), `POKEMON_TYPES`, `RawPokemonListResponse`, `RawPokemon`, `RawTypeResponse`, `PokemonRef`, `Pokemon`, `PokemonStats`, `StatKey`, `SortKey`, `SORT_OPTIONS`.
 
-- [ ] **Step 1: Write the raw API types (mirroring PokéAPI shapes exactly)**
+- [x] **Step 1: Write the raw API types (mirroring PokéAPI shapes exactly)**
 
 ```ts
 export interface NamedApiResource { name: string; url: string }
@@ -435,7 +435,7 @@ export interface RawTypeResponse {
 }
 ```
 
-- [ ] **Step 2: Write the normalized app types**
+- [x] **Step 2: Write the normalized app types**
 
 ```ts
 export const POKEMON_TYPES = [
@@ -477,12 +477,12 @@ export const SORT_OPTIONS: { value: SortKey; label: string; needsDetails: boolea
 ]
 ```
 
-- [ ] **Step 3: Verify it typechecks**
+- [x] **Step 3: Verify it typechecks**
 
 Run: `npx tsc --noEmit`
 Expected: PASS, no unused-export errors.
 
-- [ ] **Step 4: Commit and push**
+- [x] **Step 4: Commit and push**
 
 ```bash
 git add src/types/pokemon.ts
@@ -502,7 +502,7 @@ git push
 - Consumes: `PokemonType`, `POKEMON_TYPES`, `StatKey` from Task 2.
 - Produces: `getTypeColor(type): TypeColor` where `TypeColor = { base: string; soft: string; onBase: string }`; `getTypeGradient(types): string`; `formatPokemonId(3) => '#003'`; `formatPokemonName('mr-mime') => 'Mr. Mime'`; `formatHeight(4) => '0.4 m'`; `formatWeight(60) => '6.0 kg'`; `STAT_LABELS: Record<StatKey, string>`; `STAT_MAX = 255`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```ts
 // src/utils/typeColors.test.ts
@@ -566,12 +566,12 @@ it('converts decimetres to metres and hectograms to kilograms', () => {
 })
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/utils`
 Expected: FAIL — "Failed to resolve import './typeColors'".
 
-- [ ] **Step 3: Implement `typeColors.ts`**
+- [x] **Step 3: Implement `typeColors.ts`**
 
 ```ts
 import type { PokemonType } from '@/types/pokemon'
@@ -614,7 +614,7 @@ export function getTypeGradient(types: PokemonType[]): string {
 }
 ```
 
-- [ ] **Step 4: Implement `formatters.ts`**
+- [x] **Step 4: Implement `formatters.ts`**
 
 ```ts
 import type { StatKey } from '@/types/pokemon'
@@ -656,12 +656,12 @@ export function formatWeight(hectograms: number): string {
 }
 ```
 
-- [ ] **Step 5: Run tests to verify they pass**
+- [x] **Step 5: Run tests to verify they pass**
 
 Run: `npx vitest run src/utils`
 Expected: PASS (all cases in both files).
 
-- [ ] **Step 6: Commit and push**
+- [x] **Step 6: Commit and push**
 
 ```bash
 git add src/utils
@@ -689,7 +689,7 @@ git push
   - `getArtworkUrl(id: number): string`
   - `clearApiCache(): void` (test hygiene)
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```ts
 // src/services/pokemonApi.test.ts
@@ -774,12 +774,12 @@ describe('getPokemonDetail', () => {
 })
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/services`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement the service**
+- [x] **Step 3: Implement the service**
 
 Key implementation notes the engineer must follow:
 - `BASE_URL = 'https://pokeapi.co/api/v2'`; `MAX_DEX_ID = 1302`.
@@ -794,12 +794,12 @@ Key implementation notes the engineer must follow:
 - `getPokemonRefsByType(type)`: map `pokemon[].pokemon` through `idFromUrl`, filter `id <= MAX_DEX_ID`, sort by id.
 - `getAllPokemonRefs()`: single `?limit=1302&offset=0` call, cached for the session — powers substring search and name/id sorting over the full dex.
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run src/services`
 Expected: PASS (all 8 cases).
 
-- [ ] **Step 5: Commit and push**
+- [x] **Step 5: Commit and push**
 
 ```bash
 git add src/services
@@ -827,7 +827,7 @@ git push
   - `useFavorites() → { favorites: number[], isFavorite(id), toggleFavorite(id), count }`
   - `useCompare() → { selection: Pokemon[], isSelected(id), toggle(p), clear, isFull }`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```ts
 // src/hooks/useDebounce.test.ts
@@ -895,12 +895,12 @@ it('toggles a favourite on and off and persists to localStorage', () => {
 })
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/hooks src/utils/sorting.test.ts src/context`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 3: Implement the small hooks and `sorting.ts`**
+- [x] **Step 3: Implement the small hooks and `sorting.ts`**
 
 - `useDebounce`: `useState` + `useEffect` with `setTimeout`/`clearTimeout`.
 - `useLocalStorage`: lazy `useState` initializer reading `localStorage` inside `try/catch` (private-mode safe); write on change in `useEffect`.
@@ -909,7 +909,7 @@ Expected: FAIL — modules not found.
 - `useOnlineStatus`: `navigator.onLine` + `online`/`offline` listeners.
 - `sorting.ts`: `sortRefs` handles `id-*`/`name-*` (`localeCompare` for names); `sortDetails` additionally handles `attack-desc`/`speed-desc`/`hp-desc` reading `p.stats`, with `id-asc` as the stable tiebreaker.
 
-- [ ] **Step 4: Implement `usePokemonList` — the orchestration core**
+- [x] **Step 4: Implement `usePokemonList` — the orchestration core**
 
 Explicit algorithm (the engineer must not improvise here):
 
@@ -925,23 +925,23 @@ Explicit algorithm (the engineer must not improvise here):
 7. **Errors**: store the `ApiError`; `retry()` clears it and re-runs the last effect. First-page failure → full-page `ErrorState`; `loadMore` failure → inline retry beneath the grid, grid preserved.
 8. `isLoading` = first page in flight; `isLoadingMore` = subsequent page in flight.
 
-- [ ] **Step 5: Implement `usePokemonDetail`**
+- [x] **Step 5: Implement `usePokemonDetail`**
 
 Fetch on `nameOrId` change, `AbortController`-guard against races, expose `{ pokemon, isLoading, error, retry }`. A `notFound` error surfaces distinctly so the modal can render the search-miss copy.
 
-- [ ] **Step 6: Implement the three contexts**
+- [x] **Step 6: Implement the three contexts**
 
 - `ThemeContext`: initial value = stored preference, else `matchMedia('(prefers-color-scheme: dark)')`. Applies/removes `.dark` on `document.documentElement` in an effect. Key `pokemon-explorer:theme`.
 - `FavoritesContext`: `number[]` behind `useLocalStorage` at key `pokemon-explorer:favorites`; memoised `Set` for O(1) `isFavorite`.
 - `CompareContext`: `Pokemon[]` capped at 2; `toggle` removes if present, appends if room, replaces the oldest when full; `isFull = selection.length === 2`.
 - Each exports a provider plus a hook that throws a clear error when used outside its provider.
 
-- [ ] **Step 7: Run tests to verify they pass**
+- [x] **Step 7: Run tests to verify they pass**
 
 Run: `npx vitest run`
 Expected: PASS — all Task 3/4/5 suites green.
 
-- [ ] **Step 8: Commit and push**
+- [x] **Step 8: Commit and push**
 
 ```bash
 git add src/hooks src/context src/utils/sorting.ts src/utils/sorting.test.ts
@@ -960,7 +960,7 @@ git push
 **Interfaces:**
 - Produces: `Button({ variant: 'primary'|'secondary'|'ghost'|'danger', size: 'sm'|'md'|'lg', isLoading?, leftIcon?, ...ButtonHTMLAttributes })`; `IconButton({ label, icon, ...})` (renders `aria-label={label}`); `Chip({ isActive, color?, ...})`; `Skeleton({ className })`; `Select<T>({ value, options, onChange, label })`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/components/ui/Button.test.tsx
@@ -985,12 +985,12 @@ it('is disabled and shows a spinner while loading', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/components/ui`
 Expected: FAIL — `./Button` not found.
 
-- [ ] **Step 3: Implement the primitives**
+- [x] **Step 3: Implement the primitives**
 
 - All primitives are `forwardRef` and spread `...rest` so they compose.
 - `Button` base classes: `inline-flex items-center justify-center gap-2 rounded-full font-medium transition-[transform,background-color,box-shadow] duration-150 active:scale-[.97] disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2`.
@@ -1003,12 +1003,12 @@ Expected: FAIL — `./Button` not found.
 - `Select`: native `<select>` styled to match (native = free keyboard/mobile accessibility), with a `ChevronDown` overlay and an associated `<label>`.
 - `index.ts` barrel re-exports all five.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run src/components/ui`
 Expected: PASS (both cases).
 
-- [ ] **Step 5: Commit and push**
+- [x] **Step 5: Commit and push**
 
 ```bash
 git add src/components/ui
@@ -1028,7 +1028,7 @@ git push
 - Consumes: Task 6 primitives, Task 5 contexts.
 - Produces: routes `/` and `/pokemon/:name` (both render `HomePage`; the param drives the modal) plus `*` → `NotFoundPage`. `Header` is sticky and hosts brand, search slot, theme toggle, favourites toggle.
 
-- [ ] **Step 1: Wire providers and router in `main.tsx`**
+- [x] **Step 1: Wire providers and router in `main.tsx`**
 
 ```tsx
 createRoot(document.getElementById('root')!).render(
@@ -1046,7 +1046,7 @@ createRoot(document.getElementById('root')!).render(
 )
 ```
 
-- [ ] **Step 2: Define routes in `App.tsx`**
+- [x] **Step 2: Define routes in `App.tsx`**
 
 ```tsx
 <ErrorBoundary>
@@ -1064,23 +1064,23 @@ createRoot(document.getElementById('root')!).render(
 </ErrorBoundary>
 ```
 
-- [ ] **Step 3: Build `Header`**
+- [x] **Step 3: Build `Header`**
 
 Sticky (`sticky top-0 z-40`), `bg-surface/80 backdrop-blur-xl border-b border-border`. Row 1: brand mark (a Poké-ball SVG in brand colour + `Pokémon Explorer` in `font-display font-bold`), spacer, favourites count pill, `ThemeToggle`. On `lg+` the `SearchBar` sits inline in the header; below `lg` it drops into the page toolbar. `aria-label="Primary"` on the nav.
 
-- [ ] **Step 4: Build `ThemeToggle`, `Container`, `Footer`, `SkipLink`**
+- [x] **Step 4: Build `ThemeToggle`, `Container`, `Footer`, `SkipLink`**
 
 - `ThemeToggle`: `IconButton` swapping `Sun`/`Moon` with a 200ms rotate+fade cross-dissolve; `aria-label` reflects the *action* ("Switch to dark theme").
 - `Container`: `mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8`.
 - `Footer`: attribution — "Data from PokéAPI" (external link, `rel="noreferrer"`) — muted, small.
 - `SkipLink`: visually hidden until focused, jumps to `#main`.
 
-- [ ] **Step 5: Verify in the browser at three widths**
+- [x] **Step 5: Verify in the browser at three widths**
 
 Run: `npm run dev`
 Expected: header sticks on scroll, theme toggle flips instantly and survives reload, no horizontal scroll at 320/768/1440px.
 
-- [ ] **Step 6: Commit and push**
+- [x] **Step 6: Commit and push**
 
 ```bash
 git add src/main.tsx src/App.tsx src/components/layout src/pages
@@ -1101,7 +1101,7 @@ git push
 - Consumes: `Pokemon`, `getTypeColor`, `getTypeGradient`, formatters, `useFavorites`.
 - Produces: `PokemonCard({ pokemon, onSelect, index })`; `TypeBadge({ type, size })`; `PokemonGrid({ items, isLoading, isLoadingMore, onSelect })`; `LoadingSkeleton({ count })`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/components/pokemon/PokemonCard.test.tsx
@@ -1143,16 +1143,16 @@ it('selects on click and on Enter, and is keyboard reachable', async () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/components/pokemon`
 Expected: FAIL — `./PokemonCard` not found.
 
-- [ ] **Step 3: Implement `TypeBadge`**
+- [x] **Step 3: Implement `TypeBadge`**
 
 Pill with `background: color.base`, `color: color.onBase`, `text-xs font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full`. Label via `formatPokemonName(type)`. `size="sm"` variant for cards, `"md"` for the modal.
 
-- [ ] **Step 4: Implement `PokemonCard` (the signature seam device)**
+- [x] **Step 4: Implement `PokemonCard` (the signature seam device)**
 
 - Root is a real `<button type="button">` (free keyboard + `role=button` + Enter/Space) with `aria-label={`${formatPokemonName(name)}, number ${id}`}`, `text-left w-full group`.
 - Structure follows the Design System's seam diagram exactly — an **upper artwork chamber** and a **lower data chamber**, divided by a 1px seam carrying a type-coloured latch:
@@ -1166,21 +1166,21 @@ Pill with `background: color.base`, `color: color.onBase`, `text-xs font-semibol
 - Hover: `group-hover:-translate-y-1` + type-tinted shadow, `transition duration-200`. Entrance: Framer `motion.div` fade+rise with `delay: Math.min(index, 19) * 0.028`.
 - Favourite and compare buttons `stopPropagation` so they never open the modal.
 
-- [ ] **Step 5: Implement `LoadingSkeleton` and `PokemonGrid`**
+- [x] **Step 5: Implement `LoadingSkeleton` and `PokemonGrid`**
 
 - `LoadingSkeleton({ count = 20 })`: same card geometry — rounded square artwork block, two text bars, one badge pill — animated by the shimmer utility. **Never renders the text "Loading".**
 - `PokemonGrid`: `grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-5`. First load → skeletons; `isLoadingMore` → grid plus 10 trailing skeletons. `role="list"` with `role="listitem"` wrappers.
 
-- [ ] **Step 6: Wire `HomePage` with Load More**
+- [x] **Step 6: Wire `HomePage` with Load More**
 
 `usePokemonList` output → `PokemonGrid`; below it a centred `Button variant="primary" size="lg"` labelled exactly `Load More`, shown only when `hasMore`, with `isLoading={isLoadingMore}`. Also render `total` as a muted "Showing X of Y Pokémon" line for hierarchy.
 
-- [ ] **Step 7: Run test + browser check**
+- [x] **Step 7: Run test + browser check**
 
 Run: `npx vitest run src/components/pokemon && npm run dev`
 Expected: tests PASS; 20 cards render, skeletons flash on first paint, Load More appends the next 20 without layout jump.
 
-- [ ] **Step 8: Commit and push**
+- [x] **Step 8: Commit and push**
 
 ```bash
 git add src/components/pokemon src/components/states src/pages/HomePage.tsx
@@ -1201,7 +1201,7 @@ git push
 - Consumes: `useDebounce`, `POKEMON_TYPES`, `SORT_OPTIONS`, `getTypeColor`, primitives.
 - Produces: `SearchBar({ value, onChange })`; `TypeFilter({ value, onChange })`; `SortSelect({ value, onChange })`; `Toolbar` composing all three + favourites toggle. `HomePage` reads/writes `?q=`, `?type=`, `?sort=`, `?favorites=` via `useSearchParams`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```tsx
 // src/components/search/SearchBar.test.tsx
@@ -1254,34 +1254,34 @@ it('emits the selected type', async () => {
 })
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/components/search src/components/filters`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 3: Implement `SearchBar`**
+- [x] **Step 3: Implement `SearchBar`**
 
 `<input type="search" role="searchbox">` with `Search` lucide icon left, animated `X` clear button right (only when non-empty), placeholder exactly `Search Pokémon...`. Classes: `w-full rounded-2xl bg-surface-2 border border-border pl-11 pr-10 py-3 placeholder:text-text-muted focus:border-brand/50 focus:ring-4 focus:ring-brand/10 transition`. `Escape` clears; `aria-label="Search Pokémon by name"`; `autoComplete="off"`.
 
-- [ ] **Step 4: Implement `TypeFilter`, `SortSelect`, `FavoritesFilter`, `Toolbar`**
+- [x] **Step 4: Implement `TypeFilter`, `SortSelect`, `FavoritesFilter`, `Toolbar`**
 
 - `TypeFilter`: `role="radiogroup" aria-label="Filter by type"`; each chip `role="radio" aria-checked`. Active chip fills with its type colour (`All` uses brand); inactive uses `soft` tint with a coloured dot. Mobile: `flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 snap-x [scrollbar-width:none]` with edge fade masks. `lg+`: wraps to a single flex-wrap row.
 - `SortSelect`: labelled `Sort by`, options from `SORT_OPTIONS`.
 - `FavoritesFilter`: toggle `Chip` with a `Heart` icon and the favourites count; `aria-pressed`.
 - `Toolbar`: sticky under the header on mobile; grid layout — search full-width (mobile only), then a row of `SortSelect` + `FavoritesFilter`, then the type chip row.
 
-- [ ] **Step 5: Wire URL sync + the stat-sort disclosure in `HomePage`**
+- [x] **Step 5: Wire URL sync + the stat-sort disclosure in `HomePage`**
 
 - `useSearchParams` is the single source of truth: `q`, `type`, `sort`, `favorites`. Writes use `{ replace: true }` for keystrokes so the back button isn't polluted.
 - Local input state mirrors `q` immediately for responsiveness; `useDebounce(input, 350)` drives both the URL write and the fetch.
 - When the active sort has `needsDetails: true` **and** no type/favourites filter is active, render a muted note beneath the toolbar: `Sorting applies to the Pokémon loaded so far.` (Honest about the PokéAPI constraint — reused verbatim in the README's Challenges section.)
 
-- [ ] **Step 6: Run tests + browser check**
+- [x] **Step 6: Run tests + browser check**
 
 Run: `npx vitest run && npm run dev`
 Expected: all PASS. Typing `pika` narrows results; `?q=pika&type=electric&sort=attack-desc` restores exactly that view on reload; the chip row scrolls smoothly on a 375px viewport.
 
-- [ ] **Step 7: Commit and push**
+- [x] **Step 7: Commit and push**
 
 ```bash
 git add src/components/search src/components/filters src/pages/HomePage.tsx src/components/layout/Header.tsx
@@ -1302,7 +1302,7 @@ git push
 - Consumes: `ApiError`, primitives.
 - Produces: `ErrorState({ error, onRetry, variant: 'page'|'inline' })`; `EmptyState({ variant: 'search'|'filter'|'favorites', query?, onReset })`; `ErrorBoundary` class component.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```tsx
 // src/components/states/ErrorState.test.tsx
@@ -1346,31 +1346,31 @@ it('uses the generic empty copy for a filter with no results', () => {
 })
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/components/states`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 3: Implement `ErrorState`**
+- [x] **Step 3: Implement `ErrorState`**
 
 Centred card: `CloudOff` icon (network) or `AlertTriangle` (otherwise) in a `bg-danger/10` circle, heading `Something went wrong.` (`font-display text-2xl font-bold`), body `We couldn't load the Pokémon.`, plus a `kind`-specific hint line — network → `Check your internet connection and try again.`, http → `The Pokémon API is not responding right now.`, malformed → `We received an unexpected response from the API.` Then `Button variant="primary"` labelled `Try Again` with a `RotateCw` icon. `variant="inline"` renders the same content compactly for Load-More failures. `role="alert"`.
 
-- [ ] **Step 4: Implement `EmptyState` and `ErrorBoundary`**
+- [x] **Step 4: Implement `EmptyState` and `ErrorBoundary`**
 
 - `EmptyState`: large muted magnifier/Poké-ball illustration; `search` variant uses the not-found copy (and echoes the query in a muted line), `filter`/`favorites` use the generic copy; secondary `Button` — `Clear search` / `Show all Pokémon` / `Browse Pokémon` — calls `onReset`.
 - `ErrorBoundary`: `getDerivedStateFromError` → renders `ErrorState variant="page"` whose retry does `window.location.reload()`; logs to `console.error` in dev.
 - `NotFoundPage`: 404 layout reusing `EmptyState` with a `Back to all Pokémon` link.
 
-- [ ] **Step 5: Wire the state machine into `HomePage`**
+- [x] **Step 5: Wire the state machine into `HomePage`**
 
 Strict precedence, no overlap: `error && items.length === 0` → page `ErrorState` · `isLoading` → skeletons · `isSearchMiss` → `EmptyState variant="search"` · `items.length === 0` → `EmptyState` (filter/favorites) · else grid (+ inline `ErrorState` when `error && items.length > 0`).
 
-- [ ] **Step 6: Verify by simulating failures**
+- [x] **Step 6: Verify by simulating failures**
 
 Run: `npm run dev`, then in DevTools set Network → Offline and reload; also search `zzzz`; also filter to a type then clear favourites.
 Expected: offline shows network `ErrorState` with a working `Try Again`; `zzzz` shows the not-found empty state; no blank screens anywhere.
 
-- [ ] **Step 7: Run tests, commit, push**
+- [x] **Step 7: Run tests, commit, push**
 
 ```bash
 npx vitest run src/components/states
@@ -1392,7 +1392,7 @@ git push
 - Consumes: `usePokemonDetail`, `useFocusTrap`, `useLockBodyScroll`, `getTypeGradient`, formatters, `STAT_LABELS`, `STAT_MAX`.
 - Produces: `PokemonModal({ nameOrId, onClose, onNavigate })`; `StatBar({ statKey, value, color })`; `MoveList({ moves, total })`; `FavoriteButton({ pokemonId, size })`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```tsx
 // src/components/pokemon/StatBar.test.tsx
@@ -1419,17 +1419,17 @@ it('renders the stat label, value, and a correctly-scaled accessible meter', () 
 // Mock '@/hooks/usePokemonDetail' to return the pikachu fixture from Task 8.
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/components/pokemon`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 3: Implement `StatBar` and `MoveList`**
+- [x] **Step 3: Implement `StatBar` and `MoveList`**
 
 - `StatBar`: label (`w-20 text-sm text-text-muted`), value (`font-mono tabular-nums font-semibold w-10 text-right`), track (`h-2 flex-1 rounded-full bg-surface-2`), fill (`h-full rounded-full` with `background: color`, `width: (value/STAT_MAX)*100%`, animated from 0 with a 600ms ease-out on mount). `role="progressbar"` + `aria-valuenow/min/max` + `aria-label`.
 - `MoveList`: first 12 moves as `Chip`s via `formatPokemonName`; if `total > 12`, a muted `+{total - 12} more moves` line. Heading `Moves`.
 
-- [ ] **Step 4: Implement `PokemonModal`**
+- [x] **Step 4: Implement `PokemonModal`**
 
 - Portal to `document.body`. Backdrop: `fixed inset-0 z-50 bg-black/50 backdrop-blur-sm` (Framer fade 160ms), click closes.
 - Panel: `role="dialog" aria-modal="true" aria-labelledby="pokemon-modal-title"`, `relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-surface shadow-2xl`. Desktop: centred, `scale .96→1` + fade, 220ms spring. Mobile (`< 640px`): bottom sheet — `rounded-t-3xl` full-width, slides up from `y: '100%'`, with a grab handle.
@@ -1438,19 +1438,19 @@ Expected: FAIL — modules not found.
 - States inside the panel: `isLoading` → skeleton in the same geometry (no layout jump); `error.kind === 'notFound'` → the brief's not-found copy + `Back to all Pokémon`; other errors → inline `ErrorState` with retry.
 - Behaviour: `useFocusTrap` + `useLockBodyScroll`; `Escape` closes; focus returns to the originating card; `←`/`→` call `onNavigate(-1 | 1)` to move between loaded Pokémon.
 
-- [ ] **Step 5: Wire URL ↔ modal in `HomePage`**
+- [x] **Step 5: Wire URL ↔ modal in `HomePage`**
 
 - `useParams().name` presence opens the modal — so `/pokemon/pikachu` deep-links and is shareable (bonus B6).
 - Card select → `navigate(`/pokemon/${name}${location.search}`)`, preserving query params so closing returns to the same filtered view.
 - Close → `navigate(`/${location.search}`)`; back/forward buttons open/close the modal naturally.
 - Set `document.title` to `` `${formatPokemonName(name)} · Pokémon Explorer` `` while open; restore on close.
 
-- [ ] **Step 6: Run tests + manual keyboard/deep-link check**
+- [x] **Step 6: Run tests + manual keyboard/deep-link check**
 
 Run: `npx vitest run src/components/pokemon && npm run dev`
 Expected: tests PASS. Loading `/pokemon/charizard` directly opens the modal over the grid; `Tab` cycles only inside the panel; `Escape` closes and refocuses the card; mobile shows a sheet.
 
-- [ ] **Step 7: Commit and push**
+- [x] **Step 7: Commit and push**
 
 ```bash
 git add src/components/pokemon src/pages/HomePage.tsx
@@ -1471,7 +1471,7 @@ git push
 - Consumes: `useCompare`, `STAT_LABELS`, `getTypeColor`, primitives.
 - Produces: `CompareTray()` (fixed bottom bar) and `CompareModal({ a, b, onClose })`. Card/modal gain a compare affordance.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/components/compare/CompareModal.test.tsx
@@ -1482,29 +1482,29 @@ git push
 // 4. Escape / close button call onClose
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/components/compare`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement `CompareTray`**
+- [x] **Step 3: Implement `CompareTray`**
 
 `fixed bottom-4 inset-x-4 z-40 mx-auto max-w-lg`, `bg-surface/90 backdrop-blur-xl border border-border rounded-2xl shadow-2xl p-3`. Slides up (Framer) only when `selection.length > 0`. Shows up to two slots (sprite + name, or a dashed "Select a Pokémon" placeholder), a `Compare` primary button enabled only when `isFull`, and a `Clear` ghost button. Announces state via `aria-live="polite"`.
 
-- [ ] **Step 4: Implement `CompareModal`**
+- [x] **Step 4: Implement `CompareModal`**
 
 Same portal/backdrop/focus-trap/`Escape` mechanics as `PokemonModal` (reuse the hooks — no duplication). Layout: two headers with artwork on their type gradients, then a stat table — label column centred between two value columns — rendering the six stats plus `Total`. Each side's bar grows from the centre outward; the winning side gets `data-winner="true"`, a bolder weight, and a small `ChevronUp`; ties are marked neutral. Mobile: columns stay side-by-side (the point of the feature) but artwork shrinks and the table switches to `text-sm`.
 
-- [ ] **Step 5: Add the compare affordance**
+- [x] **Step 5: Add the compare affordance**
 
 `PokemonCard` gains a small `Scale`-icon `IconButton` (revealed on hover, always visible on touch) with `aria-label="Add Pikachu to comparison"` / `"Remove …"` and `aria-pressed`; it `stopPropagation`s. `PokemonModal` gains a full `Compare` button. Selected cards get a brand-coloured ring.
 
-- [ ] **Step 6: Run test + manual check**
+- [x] **Step 6: Run test + manual check**
 
 Run: `npx vitest run src/components/compare && npm run dev`
 Expected: PASS; selecting two Pokémon enables `Compare`; the modal highlights the correct winners; selecting a third replaces the oldest.
 
-- [ ] **Step 7: Commit and push**
+- [x] **Step 7: Commit and push**
 
 ```bash
 git add src/components/compare src/components/pokemon src/App.tsx
@@ -1525,7 +1525,7 @@ git push
 - Consumes: `useFavorites`.
 - Produces: `FavoriteButton({ pokemonId, size })` — a pressed-state `IconButton` wrapping a `Heart`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/components/pokemon/FavoriteButton.test.tsx
@@ -1551,27 +1551,27 @@ it('toggles aria-pressed and persists across remounts', async () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/components/pokemon/FavoriteButton.test.tsx`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement `FavoriteButton`**
+- [x] **Step 3: Implement `FavoriteButton`**
 
 `Heart` icon, `fill-favorite text-favorite` when active else `text-text-muted`; `aria-pressed` and `aria-label` = `Add Pikachu to favourites` / `Remove Pikachu from favourites` (accepts an optional `name`). Tap animation: `scale 1 → 1.25 → 1` over 260ms plus a one-shot radial pulse; skipped under reduced motion. `stopPropagation` on click.
 
-- [ ] **Step 4: Complete the favourites surfaces**
+- [x] **Step 4: Complete the favourites surfaces**
 
 - `Header`: `Heart` pill showing the count, linking to `?favorites=1`; hidden when count is 0.
 - `FavoritesFilter`: drives `?favorites=1`.
 - `usePokemonList`: when `favoritesOnly`, source = favourite IDs mapped to refs (from the cached full index), fully fetched so sorting is complete; zero favourites → `EmptyState variant="favorites"`.
 
-- [ ] **Step 5: Run test + manual check**
+- [x] **Step 5: Run test + manual check**
 
 Run: `npx vitest run && npm run dev`
 Expected: PASS; hearts persist across a hard reload; the favourites view lists exactly the hearted Pokémon.
 
-- [ ] **Step 6: Commit and push**
+- [x] **Step 6: Commit and push**
 
 ```bash
 git add src/components src/hooks/usePokemonList.ts
@@ -1590,7 +1590,7 @@ git push
 **Interfaces:**
 - Produces: verified `.dark` behaviour across every component; no-flash first paint.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/context/ThemeContext.test.tsx
@@ -1599,25 +1599,25 @@ git push
 // 3. the choice persists to localStorage key 'pokemon-explorer:theme'
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/context/ThemeContext.test.tsx`
 Expected: FAIL.
 
-- [ ] **Step 3: Eliminate the theme flash**
+- [x] **Step 3: Eliminate the theme flash**
 
 Add a tiny blocking script in `index.html` `<head>` that reads the stored theme (or `matchMedia`) and sets `document.documentElement.className` **before** first paint. Also set `<meta name="color-scheme" content="light dark">` and a `theme-color` meta per scheme.
 
-- [ ] **Step 4: Audit every surface in dark mode**
+- [x] **Step 4: Audit every surface in dark mode**
 
 Walk header, toolbar, chips, cards, skeletons, modal, sheet, tray, error/empty states, focus rings. Fix any hard-coded light-mode colour by routing it through a token. Type colours keep their hue in dark mode but card washes drop to `opacity-[.14]` so text contrast holds.
 
-- [ ] **Step 5: Verify contrast and persistence**
+- [x] **Step 5: Verify contrast and persistence**
 
 Run: `npm run dev`
 Expected: no white flash on reload in dark mode; body text ≥ 4.5:1 in both themes (spot-check with DevTools); toggle animates smoothly.
 
-- [ ] **Step 6: Commit and push**
+- [x] **Step 6: Commit and push**
 
 ```bash
 git add index.html src/styles src/context src/components
@@ -1636,11 +1636,11 @@ git push
 **Interfaces:**
 - Produces: `useMediaQuery(query): boolean` (drives the modal's centred-dialog ↔ bottom-sheet switch).
 
-- [ ] **Step 1: Implement `useMediaQuery`**
+- [x] **Step 1: Implement `useMediaQuery`**
 
 `matchMedia` + `change` listener, SSR-safe default `false`, used as `useMediaQuery('(min-width: 640px)')`.
 
-- [ ] **Step 2: Audit five viewports**
+- [x] **Step 2: Audit five viewports**
 
 Check 320, 375, 768, 1024, 1440px:
 - No horizontal overflow anywhere; no text clipping; tap targets ≥ 44px.
@@ -1650,16 +1650,16 @@ Check 320, 375, 768, 1024, 1440px:
 - Modal: bottom sheet `< 640px`, centred dialog above; artwork scales down; stat labels never wrap.
 - Compare tray: sits above the mobile browser chrome (`bottom-4` + `env(safe-area-inset-bottom)`).
 
-- [ ] **Step 3: Add the page-transition polish**
+- [x] **Step 3: Add the page-transition polish**
 
 Wrap route content in a Framer `AnimatePresence` fade (140ms) so navigations feel intentional. Keep the grid mounted when the modal opens (no re-fetch, no flicker). Verify the motion budget from the Design System is respected — nothing longer than 260ms except stat bars.
 
-- [ ] **Step 4: Verify reduced motion**
+- [x] **Step 4: Verify reduced motion**
 
 In DevTools → Rendering → emulate `prefers-reduced-motion: reduce`.
 Expected: no transforms or slides; opacity-only changes; app remains fully usable.
 
-- [ ] **Step 5: Commit and push**
+- [x] **Step 5: Commit and push**
 
 ```bash
 git add src
@@ -1675,7 +1675,7 @@ git push
 - Modify: `src/components/**`
 - Test: `src/test/a11y.test.tsx`
 
-- [ ] **Step 1: Write the keyboard-journey test**
+- [x] **Step 1: Write the keyboard-journey test**
 
 ```tsx
 // src/test/a11y.test.tsx
@@ -1686,12 +1686,12 @@ git push
 // 4. Escape closes the dialog and focus returns to that same card
 ```
 
-- [ ] **Step 2: Run it and fix what fails**
+- [x] **Step 2: Run it and fix what fails**
 
 Run: `npx vitest run src/test/a11y.test.tsx`
 Expected: initially FAIL; iterate on `tabIndex`, focus management, and ordering until PASS.
 
-- [ ] **Step 3: Sweep semantics**
+- [x] **Step 3: Sweep semantics**
 
 - Landmarks: `header`, `main#main`, `footer`; `nav` labelled.
 - One `h1` (`Pokémon Explorer`), section headings in order.
@@ -1700,12 +1700,12 @@ Expected: initially FAIL; iterate on `tabIndex`, focus management, and ordering 
 - `aria-busy` on the grid while loading.
 - Loading buttons announce state (`aria-live` on the label, not just a spinner).
 
-- [ ] **Step 4: Manual screen-reader spot check**
+- [x] **Step 4: Manual screen-reader spot check**
 
 Tab through the whole app with Windows Narrator (or NVDA) once.
 Expected: every stop is announced meaningfully; nothing reads as "button" with no name.
 
-- [ ] **Step 5: Commit and push**
+- [x] **Step 5: Commit and push**
 
 ```bash
 git add src
@@ -1721,28 +1721,28 @@ git push
 - Modify: `src/services/pokemonApi.ts`, `src/hooks/usePokemonList.ts`, `src/components/pokemon/PokemonCard.tsx`, `src/App.tsx`
 - Create: `src/components/states/OfflineBanner.tsx`, `public/pokeball-placeholder.svg`
 
-- [ ] **Step 1: Add request timeout and single retry**
+- [x] **Step 1: Add request timeout and single retry**
 
 `AbortSignal.timeout(10_000)` on every request; one automatic retry with 600ms backoff for `network`/`5xx` only — never for `404`. `notFound` must stay fast so search feels instant.
 
-- [ ] **Step 2: Add the offline banner**
+- [x] **Step 2: Add the offline banner**
 
 `useOnlineStatus` → a slide-down banner (`role="status"`): `You're offline. Some Pokémon may not load.` Auto-dismisses on reconnect and triggers `retry()` for any errored state.
 
-- [ ] **Step 3: Harden image loading**
+- [x] **Step 3: Harden image loading**
 
 `onError` chain: official artwork → `spriteUrl` → `/pokeball-placeholder.svg`. Reserve space with fixed `width`/`height` to prevent CLS. Add a low-cost blurred colour placeholder behind the artwork while it decodes.
 
-- [ ] **Step 4: Verify the edge cases**
+- [x] **Step 4: Verify the edge cases**
 
 Manually confirm: rapid typing (`p` → `pi` → `pik`) never renders a stale result; toggling filters mid-fetch doesn't mix data sets; `/pokemon/notarealmon` shows the not-found modal state; DevTools offline → banner + retry works; a throttled "Slow 3G" first load shows skeletons, never a blank screen.
 
-- [ ] **Step 5: Run the full suite**
+- [x] **Step 5: Run the full suite**
 
 Run: `npx tsc --noEmit && npm run lint && npx vitest run && npm run build`
 Expected: all clean, build succeeds.
 
-- [ ] **Step 6: Commit and push**
+- [x] **Step 6: Commit and push**
 
 ```bash
 git add src public
@@ -1758,7 +1758,7 @@ git push
 - Create: `README.md`, `vercel.json`, `render.yaml`, `.env.example`
 - Modify: `package.json` (engines, name, description)
 
-- [ ] **Step 1: Write `README.md` with all eight required sections**
+- [x] **Step 1: Write `README.md` with all eight required sections**
 
 Exactly the headings the brief requires, in order: `# Pokémon Explorer`, `## Features`, `## Tech Stack`, `## API Used`, `## Installation`, `## Running Locally`, `## Project Structure`, `## Challenges Faced`, `## Future Improvements`. Add a screenshot block near the top (filled in Task 19), a live-demo placeholder line for the user's own URL, and a short "Deployment" subsection covering both Vercel and Render.
 
@@ -1767,7 +1767,7 @@ Content notes:
 - **Challenges Faced** — real, specific: (1) the list endpoint returns only `{name, url}` so card types/stats require a per-Pokémon batch fetch — solved with a concurrency-12 pool plus promise-level caching; (2) PokéAPI cannot sort by stat, so full-dex stat sorting is bounded to loaded Pokémon while filtered sets sort completely; (3) type filtering needs a different endpoint shape and client-side pagination; (4) keeping modal state, search, filter, and sort all in the URL without polluting browser history; (5) alternate-form IDs ≥ 10000 lack official artwork.
 - **Future Improvements** — evolution chains, generation filter, virtualised grid, service-worker offline cache, Playwright E2E, i18n.
 
-- [ ] **Step 2: Add SPA rewrite configs (config only — do not deploy)**
+- [x] **Step 2: Add SPA rewrite configs (config only — do not deploy)**
 
 ```json
 // vercel.json
@@ -1790,12 +1790,12 @@ services:
 
 Both are required for deep links like `/pokemon/pikachu` to work on a static host.
 
-- [ ] **Step 3: Verify the documented commands actually work**
+- [x] **Step 3: Verify the documented commands actually work**
 
 Run: `npm ci && npm run build && npm run preview`
 Expected: a clean install builds and previews; visiting `/pokemon/pikachu` in preview opens the modal.
 
-- [ ] **Step 4: Commit and push**
+- [x] **Step 4: Commit and push**
 
 ```bash
 git add README.md vercel.json render.yaml .env.example package.json
@@ -1811,29 +1811,29 @@ git push
 - Create: `screenshots/*.png`
 - Modify: `README.md` (embed the screenshots)
 
-- [ ] **Step 1: Capture the screenshot set**
+- [x] **Step 1: Capture the screenshot set**
 
 With `npm run dev` running, capture: `home-desktop-light.png`, `home-desktop-dark.png`, `detail-modal.png`, `compare.png`, `type-filter.png`, `search-empty-state.png`, `error-state.png`, `loading-skeletons.png`, `home-tablet.png` (768px), `home-mobile.png` (375px), `detail-mobile-sheet.png`. Use the `run` skill / browser tooling at exact viewport sizes.
 
-- [ ] **Step 2: Embed them in the README**
+- [x] **Step 2: Embed them in the README**
 
 A hero image directly under the title, then a compact markdown table of the rest (two columns, `<img width="400">` each) so the README renders well on GitHub.
 
-- [ ] **Step 3: Run the complete verification gate**
+- [x] **Step 3: Run the complete verification gate**
 
 Run: `npx tsc --noEmit && npm run lint && npx vitest run --coverage && npm run build`
 Expected: zero type errors, zero lint errors, all tests pass, production build succeeds.
 
-- [ ] **Step 4: Walk the Requirement Traceability table**
+- [x] **Step 4: Walk the Requirement Traceability table**
 
 Re-read the table in this document and confirm every row against the running app. Any row that fails becomes a fix commit before proceeding.
 
-- [ ] **Step 5: Confirm the git history is clean and complete**
+- [x] **Step 5: Confirm the git history is clean and complete**
 
 Run: `git log --oneline` and `git status`
 Expected: one focused, conventionally-named commit per task in order; working tree clean; `main` fully pushed to `origin`.
 
-- [ ] **Step 6: Final commit and push**
+- [x] **Step 6: Final commit and push**
 
 ```bash
 git add screenshots README.md
@@ -1845,12 +1845,12 @@ git push
 
 ## Definition of Done
 
-- [ ] All nine core requirements implemented and manually verified.
-- [ ] All six bonus features implemented (favourites, dark mode, sort, compare, keyboard a11y, URL-based search).
-- [ ] Zero TypeScript errors, zero ESLint errors, all Vitest suites green, `npm run build` succeeds.
-- [ ] Verified at 320 / 375 / 768 / 1024 / 1440px with no horizontal scroll.
-- [ ] Full keyboard operability; `Escape` closes every overlay; focus is always visible and restored.
-- [ ] Loading (skeletons), error (with retry), and empty states reachable and correct — the string "Loading..." appears nowhere.
-- [ ] README contains all eight required sections; screenshots embedded.
-- [ ] Deployment configs present for Vercel and Render — **nothing deployed by the agent.**
-- [ ] `main` pushed to `origin` with one clean commit per task.
+- [x] All nine core requirements implemented and manually verified.
+- [x] All six bonus features implemented (favourites, dark mode, sort, compare, keyboard a11y, URL-based search).
+- [x] Zero TypeScript errors, zero ESLint errors, all Vitest suites green, `npm run build` succeeds.
+- [x] Verified at 320 / 375 / 768 / 1024 / 1440px with no horizontal scroll.
+- [x] Full keyboard operability; `Escape` closes every overlay; focus is always visible and restored.
+- [x] Loading (skeletons), error (with retry), and empty states reachable and correct — the string "Loading..." appears nowhere.
+- [x] README contains all eight required sections; screenshots embedded.
+- [x] Deployment configs present for Vercel and Render — **nothing deployed by the agent.**
+- [x] `main` pushed to `origin` with one clean commit per task.
