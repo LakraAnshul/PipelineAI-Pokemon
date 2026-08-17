@@ -4,6 +4,14 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A beautiful, responsive Pokémon explorer built on the PokéAPI",
+  "keywords": ["pokemon", "pokeapi", "react", "typescript", "vite", "tailwindcss"],
+  "license": "MIT",
+  "author": "Anshul Lakra",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LakraAnshul/PipelineAI-Pokemon.git"
+  },
+  "homepage": "https://github.com/LakraAnshul/PipelineAI-Pokemon#readme",
   "engines": {
     "node": ">=20"
   },

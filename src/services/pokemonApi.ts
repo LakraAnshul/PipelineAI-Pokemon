@@ -20,7 +20,16 @@ import {
  * Components never see a `Response`, a snake_case key, or a bare `TypeError`.
  */
 
-const BASE_URL = 'https://pokeapi.co/api/v2'
+/**
+ * PokéAPI is public, so the default needs no configuration at all. The override
+ * exists for a deployment that has to route through a mirror or a caching proxy;
+ * it is read at build time because Vite inlines it and there is no server here
+ * to read anything at runtime. Trailing slashes are trimmed so a value copied
+ * out of a browser bar cannot produce `//pokemon`.
+ */
+const BASE_URL = (
+  import.meta.env.VITE_POKEAPI_BASE_URL ?? 'https://pokeapi.co/api/v2'
+).replace(/\/+$/, '')
 
 /**
  * Artwork is served from the sprites repo, not the JSON API, and the filename
